@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Yape</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #6A1B9A;
+            color: white;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #8E24AA;
+            width: 80%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .header {
+            background-color: #6A1B9A;
+            padding: 15px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .header img {
+            width: 70px;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.2em;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .button {
+            background-color: #00C853;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .action-button {
+            background-color: #6A1B9A;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .action-button.selected {
+            background-color: #8E24AA;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="yape-logo.png" alt="Yape Logo">
+            <h2>Generar Yape</h2>
+        </div>
+        <div class="action-buttons">
+            <button id="yapeaste-button" class="action-button selected" onclick="setAction('yapeaste')">Yapeaste</button>
+            <button id="te-yapearon-button" class="action-button" onclick="setAction('te_yapearon')">Te Yapearon</button>
+        </div>
+        <div class="form-group">
+            <label for="cantidad">Cantidad de dinero (s/):</label>
+            <input type="text" id="cantidad" pattern="[0-9]{3}" maxlength="3" placeholder="Ingrese la cantidad (3 dígitos)" required>
+        </div>
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" placeholder="Ingrese el nombre completo" required>
+        </div>
+        <div class="form-group">
+            <label for="telefono">Número de teléfono:</label>
+            <input type="tel" id="telefono" pattern="[0-9]{3}" maxlength="3" placeholder="Ingrese el número de teléfono" required>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción (opcional):</label>
+            <input type="text" id="descripcion" placeholder="Descripción opcional">
+        </div>
+        <div class="buttons">
+            <button class="button" onclick="generarRecibo()">Generar Yape</button>
+        </div>
+    </div>
+    <script>
+        let accion = 'yapeaste';
+
+        function setAction(selectedAction) {
+            accion = selectedAction;
+
+            // Remover la clase 'selected' de todos los botones de acción
+            document.querySelectorAll('.action-button').forEach(button => {
+                button.classList.remove('selected');
+            });
+
+            // Agregar la clase 'selected' al botón presionado
+            const selectedButton = document.getElementById(`${selectedAction}-button`);
+            if (selectedButton) {
+                selectedButton.classList.add('selected');
+            } else {
+                console.error(`Botón con id '${selectedAction}-button' no encontrado`);
+            }
+        }
+
+        function generarRecibo() {
+            const cantidad = document.getElementById('cantidad').value;
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const descripcion = document.getElementById('descripcion').value || '';
+
+            if (cantidad && nombre && telefono) {
+                const fecha = new Date().toISOString();
+                const numeroOperacion = Math.floor(Math.random() * 1000000000);
+
+                const queryString = `?cantidad=${cantidad}&nombre=${encodeURIComponent(nombre)}&telefono=${encodeURIComponent(telefono)}&fecha=${encodeURIComponent(fecha)}&operacion=${numeroOperacion}&descripcion=${encodeURIComponent(descripcion)}&accion=${accion}`;
+                window.location.href = `recibo.html${queryString}`;
+            } else {
+                alert('Por favor, complete todos los campos.');
+            }
+        }
+    </script>
+</body>
+</html>

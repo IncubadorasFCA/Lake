@@ -1,0 +1,211 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #742284; /* Fondo morado */
+    color: white;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.contenedor {
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+}
+
+.imagen-fondo {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; /* Ajusta la imagen a su tamaño original */
+    width: 100%;
+    height: 600px; /* Ajusta la altura según sea necesario */
+    background-image: url('yapem.png'); /* Imagen de fondo por defecto */
+    position: relative;
+    color: black;
+}
+
+.contenedor-logo {
+    position: absolute;
+    top: -80px; /* Mueve el logo más arriba */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.contenedor-logo img {
+    width: 120px; /* Aumenta el tamaño del logo */
+}
+
+.recibo {
+    color: #742285; /* Color morado para el texto */
+    padding: 20px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 100px; /* Mueve el texto más abajo dentro de la imagen */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 400px;
+    z-index: 2;
+    background-color: transparent;
+    text-align: center; /* Centra el texto y el monto */
+}
+
+.recibo h3 {
+    font-size: 32px; /* Tamaño mayor para el texto */
+    margin-top: 0; /* Ajusta el margen superior */
+    color: #742285; /* Color morado para el texto "Yapeaste" o "Te Yapearon" */
+}
+
+.recibo p {
+    margin: 5px 0;
+    font-size: 20px; /* Tamaño mayor para el texto */
+}
+
+.recibo .monto {
+    font-size: 50px; /* Tamaño mayor para la cantidad */
+    font-weight: 600;
+    margin: 10px 0;
+    color: #71257d; /* Color específico para la cantidad */
+}
+
+.recibo .nombre {
+    font-size: 28px; /* Tamaño mayor para el nombre */
+    font-weight: 600;
+    margin: 10px 0;
+    color: black; /* Color negro para el nombre */
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.detalles {
+    margin-top: 20px; /* Ajuste de margen superior para los detalles */
+    font-size: 18px; /* Tamaño mayor para los detalles */
+    color: black; /* Color negro para los detalles */
+}
+
+.detalles span {
+    margin-top: 10px; /* Margen superior adicional para los detalles */
+}
+
+.fecha {
+    color: #6b617a; /* Color específico para la fecha y hora */
+    font-size: 16px; /* Tamaño mayor para la fecha */
+}
+
+.contenedor-botones {
+    position: absolute;
+    bottom: 40px; /* Baja los botones para que estén más abajo */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    z-index: 2;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.boton {
+    background-color: transparent;
+    border: 2px solid white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px; /* Ajusta el tamaño del texto de los botones */
+}
+
+.boton-compartir {
+    border-color: #8E24AA;
+}
+
+.boton-nuevo {
+    border-color: #00C853;
+}
+
+/* Estilos específicos para pantallas pequeñas */
+@media (max-width: 600px) {
+    .recibo {
+        top: 100px; /* Mueve el texto más abajo en la versión móvil */
+        font-size: 0.8rem; /* Tamaño de fuente reducido para móviles */
+    }
+
+    .detalles {
+        margin-top: 20px; /* Ajusta el margen superior de los detalles en móviles */
+        font-size: 16px; /* Tamaño mayor para los detalles en móviles */
+    }
+
+    .detalles span {
+        margin-top: 10px; /* Margen superior ajustado para detalles en móviles */
+    }
+
+    .fecha {
+        font-size: 14px; /* Tamaño mayor para la fecha en móviles */
+    }
+}
+
+/* Estilos específicos para pantallas grandes */
+@media (min-width: 601px) {
+    .contenedor-logo {
+        top: -80px; /* Mueve el logo más arriba */
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .contenedor-logo img {
+        width: 120px; /* Aumenta el tamaño del logo */
+    }
+
+    .recibo {
+        top: 100px; /* Mueve el texto más abajo dentro de la imagen */
+    }
+
+    .recibo h3 {
+        font-size: 32px; /* Tamaño mayor para el texto */
+        color: #742285; /* Color morado para el texto "Yapeaste" o "Te Yapearon" */
+    }
+
+    .recibo p {
+        font-size: 20px; /* Tamaño mayor para el texto */
+    }
+
+    .recibo .monto {
+        font-size: 50px; /* Tamaño mayor para la cantidad */
+        color: #71257d; /* Color específico para la cantidad */
+    }
+
+    .recibo .nombre {
+        font-size: 28px; /* Tamaño mayor para el nombre */
+        color: black; /* Color negro para el nombre */
+    }
+
+    .detalles {
+        margin-top: 20px; /* Ajusta el margen superior de los detalles en PC */
+        font-size: 18px; /* Tamaño mayor para los detalles en PC */
+        color: black; /* Color negro para los detalles en PC */
+    }
+
+    .detalles span {
+        margin-top: 10px; /* Margen superior adicional para los detalles en PC */
+    }
+
+    .fecha {
+        font-size: 16px; /* Tamaño mayor para la fecha en PC */
+    }
+
+    .contenedor-botones {
+        bottom: 40px; /* Baja los botones para que estén más abajo */
+    }
+}

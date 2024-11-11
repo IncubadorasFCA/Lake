@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibo Yape</title>
+    <link rel="stylesheet" href="estilos.css"> <!-- Asegúrate de que la ruta sea correcta -->
+    <style>
+        /* Estilos específicos para adaptar el diseño en diferentes dispositivos */
+        .detalles {
+            margin-top: 2rem; /* Ajuste de margen usando rem para adaptabilidad */
+        }
+        
+        /* Ajuste de tamaño del texto para dispositivos móviles */
+        @media (max-width: 600px) {
+            .recibo {
+                font-size: 0.8rem; /* Tamaño de fuente reducido para móviles */
+            }
+        }
+
+        /* Ajuste de tamaño del texto para pantallas grandes */
+        @media (min-width: 1200px) {
+            .recibo {
+                font-size: 1.2rem; /* Tamaño de fuente mayor para pantallas grandes */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="contenedor-logo">
+            <img src="yape-logo.png" alt="Yape Logo"> <!-- Asegúrate de tener la imagen en la ruta correcta -->
+        </div>
+        <div class="imagen-fondo" id="imagen-fondo">
+            <div class="recibo" id="recibo">
+                <!-- Los detalles del recibo se mostrarán aquí -->
+            </div>
+        </div>
+        <div class="contenedor-botones">
+            <div class="botones">
+                <button class="boton boton-compartir" onclick="compartirRecibo()">Compartir</button>
+                <button class="boton boton-nuevo" onclick="nuevoYape()">Nuevo Yapeo</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function obtenerParametrosURL() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                monto: params.get('cantidad'),
+                nombre: params.get('nombre'),
+                telefono: params.get('telefono'),
+                fecha: params.get('fecha'),
+                operacion: params.get('operacion'),
+                accion: params.get('accion'),
+                descripcion: params.get('descripcion')
+            };
+        }
+
+        function formatearTelefono(telefono) {
+            const parteOculta = '*** ***'; // Asteriscos primeros 6 dígitos
+            const parteVisible = telefono.slice(-3); // Últimos 3 dígitos del número real
+            return parteOculta + ' ' + parteVisible; // Combina ambas partes
+        }
+
+        function formatearNumeroOperacion(operacion) {
+            return operacion.startsWith('1') ? operacion : '1' + operacion;
+        }
+
+        function mostrarRecibo() {
+            const { monto, nombre, telefono, fecha, operacion, accion, descripcion } = obtenerParametrosURL();
+            const reciboDiv = document.getElementById('recibo');
+            const imagenFondoDiv = document.getElementById('imagen-fondo');
+
+            const textoAccion = accion === 'yapeaste' ? '¡Yapeaste!' : '¡Te Yapearon!';
+            const telefonoEnmascarado = formatearTelefono(telefono);
+
+            const fechaFormateada = fecha ? new Date(fecha).toLocaleDateString('es-ES', {
+                year: 'numeric', month: 'short', day: 'numeric'
+            }) + ' - ' + new Date(fecha).toLocaleTimeString('es-ES', { 
+                hour: '2-digit', minute: '2-digit', hour12: true 
+            }).replace(/(\s)(AM|PM)/gi, ' $2') : '';
+
+            const fechaFormateadaAjustada = fechaFormateada.replace(/(\sAM|PM)/g, (coincidencia) => coincidencia.trim().toLowerCase());
+
+            const numeroOperacionFormateado = formatearNumeroOperacion(operacion);
+
+            const imagenFondo = descripcion ? 'yapeg.png' : 'yapem.png';
+            imagenFondoDiv.style.backgroundImage = `url(${imagenFondo})`;
+
+            // Ajuste de texto para nombres largos
+            const nombreFormateado = nombre.split(' ').reduce((acumulador, parte, indice) => {
+                return indice < 3 ? acumulador + parte + ' ' : acumulador + '<br>' + parte + ' ';
+            }, '');
+
+            reciboDiv.innerHTML = `
+                <h3>${textoAccion}</h3>
+                <p class="monto"><span class="numero-monto">${monto}</span></p> <br>
+                <p class="nombre">${nombreFormateado.trim()}</p>
+                ${fechaFormateadaAjustada ? `<p class="fecha">${fechaFormateadaAjustada}</p>` : ''} <br>
+                ${descripcion ? `<p>${descripcion}</p>` : ''}
+                <p class="detalles telefono"><span class="resaltado">${telefonoEnmascarado}</span></p>
+                <p class="detalles destino"><span class="resaltado">Yape</span></p>
+                <p class="detalles numero-operacion"><span class="resaltado">${numeroOperacionFormateado}</span></p>
+            `;
+        }
+
+        function compartirRecibo() {
+            alert('Función para compartir recibo aún no implementada.');
+        }
+
+        function nuevoYape() {
+            window.history.back(); // Regresa a la página anterior
+        }
+
+        document.addEventListener('DOMContentLoaded', mostrarRecibo);
+    </script>
+</body>
+</html>
